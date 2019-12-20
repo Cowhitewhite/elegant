@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/elegant?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_TO_NULL&useSSL=false&serverTimezone=CTT
+    username: root
+    password: 123456
+
+  jpa:
+    show-sql: true
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 3000
+
+  mvc:
+    view:
+      prefix: classpath:/templates/
+      suffix: .html
+
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: 123456
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 20
+        prefetch: 5
+
+  main:
+    allow-bean-definition-overriding: true
+
+shiro:
+  session:
+    expire: 2592000 #30天

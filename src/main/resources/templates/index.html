@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:shiro="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3 th:text="${name}"></h3>
+<hr/>
+<div shiro:hasPermission="user:elegant/add">
+    进入用户添加功能：<a href="/elegant/add">用户添加</a> <br/>
+</div>
+<div shiro:hasPermission="user:elegant/update">
+    进入用户更新功能：<a href="/elegant/update">用户更新</a> <br/>
+</div>
+<a href="/elegant/logout">退出登录</a>
+
+</body>
+</html>
