@@ -47,6 +47,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/images/**", "anon");
         filterChainDefinitionMap.put("/elegant/login","anon");
+        filterChainDefinitionMap.put("/elegant","anon");
         filterChainDefinitionMap.put("/elegant/logout","logout");
         //授权过滤器(授权拦截后，shiro会自动跳转到未授权页面)
         filterChainDefinitionMap.put("/elegant/add","perms[user:elegant/add]");

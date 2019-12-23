@@ -16,6 +16,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/elegant")
 public class TestController {
 
+    @GetMapping("")
+    public String elegant(){
+        return "elegant";
+    }
 
     @GetMapping("/login")
     public String login(){
