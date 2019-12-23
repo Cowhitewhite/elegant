@@ -37,7 +37,6 @@ public class RetryLimitCredentialsMacher extends CredentialsMatcher {
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        System.out.println("..............RetryLimitCredentialsMatcher.doCredentialsMatch..................");
         User shiroUser = (User) info.getPrincipals().getPrimaryPrincipal();
         Integer userId = shiroUser.getId();
         User user = userService.findById(userId);

@@ -12,7 +12,6 @@ public class CredentialsMatcher extends SimpleCredentialsMatcher {
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        System.out.println("..............doCredentialsMatch...................");
         UsernamePasswordToken utoken = (UsernamePasswordToken) token;
         //获得用户输入的密码:(可以采用加盐(salt)的方式去检验)
         String inPassword = new String(utoken.getPassword());
