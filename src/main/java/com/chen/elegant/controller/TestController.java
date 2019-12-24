@@ -1,15 +1,27 @@
 package com.chen.elegant.controller;
 
 import com.chen.elegant.commom.JsonResult;
+import com.chen.elegant.utils.CreateValidateCodeUtil;
 import com.chen.elegant.utils.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @Slf4j
 @Controller
@@ -92,5 +104,28 @@ public class TestController {
         // 因为退出操作是由Shiro控制的
 //        redirectAttributes.addFlashAttribute("message", "您已安全退出");
         return "login";
+    }
+
+    //验证码
+    @GetMapping("/getCode")
+    public void getValidateCode(HttpServletResponse response) throws IOException {
+
+        Subject subject = SecurityUtils.getSubject();
+        //创建输出流
+        OutputStream outputStream = response.getOutputStream();
+        //获取session
+        Session session = subject.getSession();
+        //获取验证码
+        CreateValidateCodeUtil createValidateCode = new CreateValidateCodeUtil();
+        String generateVerifyCode = createValidateCode.getString();
+        //将验证码存入session，做登录验证
+        session.setAttribute("code",generateVerifyCode);
+        log.info("验证码:[{}]",generateVerifyCode);
+        //获取验证码图片
+        BufferedImage image = createValidateCode.getImage();
+        ImageIO.write(image, "png", outputStream);
+        //关流
+        outputStream.flush();
+        outputStream.close();
     }
 }
