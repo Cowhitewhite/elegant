@@ -3,13 +3,6 @@ package com.chen.elegant.enums;
 
 import org.springframework.util.StringUtils;
 
-/**
- * @author zjjlive)
- * @version 1.0
- * @website https://www.foreknow.me
- * @date 2018/4/16 16:26
- * @since 1.0
- */
 public enum UserTypeEnum {
     ROOT("超级管理员"),
     ADMIN("管理员"),
