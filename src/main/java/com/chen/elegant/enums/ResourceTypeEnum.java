@@ -23,13 +23,6 @@
  */
 package com.chen.elegant.enums;
 
-/**
- * @author zjjlive)
- * @version 1.0
- * @website https://www.foreknow.me
- * @date 2018/4/16 16:26
- * @since 1.0
- */
 public enum ResourceTypeEnum {
     menu("菜单"), button("按钮");
 
