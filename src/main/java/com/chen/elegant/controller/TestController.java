@@ -22,33 +22,36 @@ import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 
 @Slf4j
 @Controller
 @RequestMapping("/elegant")
 public class TestController {
 
-    @GetMapping("")
-    public String elegant(){
-        return "elegant";
-    }
+//    @GetMapping("")
+//    public String elegant(){
+//        return "elegant";
+//    }
+//
+//    @GetMapping("/login")
+//    public String login(){
+//        return "login";
+//    }
+//
+//    @GetMapping(value = {"/","/index"})
+//    public String test(Model model){
+//        model.addAttribute("name","Shiro");
+//        return "index";
+//    }
 
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
-
-    @GetMapping(value = {"/","/index"})
-    public String test(Model model){
-        model.addAttribute("name","Shiro");
-        return "index";
-    }
-
-    @PostMapping("/login")
     @ResponseBody
-    public JsonResult login(@RequestParam("userName") String userName,
-                            @RequestParam("password") String password,
-                            @RequestParam("rememberMe") Boolean rememberMe){
+    @PostMapping("/login")
+    public JsonResult login(@RequestBody Map<String,Object> map){
+
+        String userName = (String) map.get("userName");
+        String password = (String) map.get("password");
+        boolean rememberMe = (boolean) map.get("rememberMe");
         /**
          * 使用shiro编写操作
          */

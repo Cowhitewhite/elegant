@@ -1,7 +1,7 @@
 package com.chen.elegant.shiro.credentials;
 
 import com.chen.elegant.commom.SessionConst;
-import com.chen.elegant.entity.User;
+import com.chen.elegant.entity.TbUserAdmin;
 import com.chen.elegant.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
@@ -37,10 +37,10 @@ public class RetryLimitCredentialsMacher extends CredentialsMatcher {
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
-        User shiroUser = (User) info.getPrincipals().getPrimaryPrincipal();
-        Integer userId = shiroUser.getId();
-        User user = userService.findById(userId);
-        String username = user.getUserName();
+        TbUserAdmin shiroUser = (TbUserAdmin) info.getPrincipals().getPrimaryPrincipal();
+        Integer userId = shiroUser.getAdminUserId();
+        TbUserAdmin user = userService.findById(userId);
+        String username = user.getLoginUserName();
         //用户访问一次，计数一次(设置两个key：一个是用户登录次数key，一个是用户锁定key)
         ValueOperations<String, String> opsForValue = redisTemplate.opsForValue();
         String loginCountKey = SHIRO_LOGIN_COUNT + username;

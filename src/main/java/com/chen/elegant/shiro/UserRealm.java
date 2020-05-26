@@ -1,9 +1,8 @@
 package com.chen.elegant.shiro;
 
-import com.chen.elegant.entity.User;
+import com.chen.elegant.entity.TbUserAdmin;
 import com.chen.elegant.enums.UserStatusEnum;
 import com.chen.elegant.service.UserService;
-import com.chen.elegant.utils.MD5Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -39,18 +38,18 @@ public class UserRealm extends AuthorizingRealm {
 //        UsernamePasswordToken token1 = (UsernamePasswordToken) token;
         //获取用户的输入的账号.
         String username = (String) token.getPrincipal();
-        User user = userService.findByAccount(username);
+        TbUserAdmin user = userService.findByAccount(username);
         if (user == null){
             throw new UnknownAccountException("账号不存在！");
         }
-        if (user.getStatus() != null && UserStatusEnum.DISABLE.getCode().equals(user.getStatus())) {
+        if (user.getLocked() != null && UserStatusEnum.DISABLE.getCode().equals(user.getLocked())) {
             throw new LockedAccountException("帐号已被锁定，禁止登录！");
         }
-        log.info("传过来的密码：{},数据库的密码：{}",token.getCredentials(),user.getPassword());
+        log.info("传过来的密码：{},数据库的密码：{}",token.getCredentials(),user.getLoginPassword());
         //2.判断密码
         return new SimpleAuthenticationInfo(
                 user,
-                user.getPassword(),
+                user.getLoginPassword(),
                 ByteSource.Util.bytes(username),
                 getName());
     }
@@ -78,9 +77,9 @@ public class UserRealm extends AuthorizingRealm {
 //        info.addStringPermission("user:elegant/add");
         //到数据库查询当前登录用户的授权字符串
         Subject subject = SecurityUtils.getSubject();
-        User user = (User) subject.getPrincipal();
-        User dbUser = userService.findById(user.getId());
-        info.addStringPermission(dbUser.getPerms());
+        TbUserAdmin user = (TbUserAdmin) subject.getPrincipal();
+        TbUserAdmin dbUser = userService.findById(user.getAdminUserId());
+//        info.addStringPermission(dbUser.getPerms());
         return info;
     }
 

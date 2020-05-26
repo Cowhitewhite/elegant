@@ -1,13 +1,13 @@
 package com.chen.elegant.repository;
 
-import com.chen.elegant.entity.User;
+import com.chen.elegant.entity.TbUserAdmin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<TbUserAdmin,Long> {
 
-    User findByUserName(String name);
+    TbUserAdmin findByLoginUserName(String name);
 
-    User findById(Integer id);
+    TbUserAdmin findByAdminUserId(Integer id);
 }
